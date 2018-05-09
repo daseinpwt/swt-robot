@@ -80,9 +80,9 @@ classdef MarsRobotController < handle
             obj.beep(440, 100);
         end
 
-        %F Check if the motor has detected the color
-        function sensored = sensoredColor(obj, motor, color)
-            if motor == obj.LIGHT_SENSOR_LEFT
+        %F Check if the sensor has detected the color
+        function sensored = sensoredColor(obj, sensor, color)
+            if sensor == obj.LIGHT_SENSOR_LEFT
                 v = GetLight(SENSOR_3);
 %                 v = 500;
             else
