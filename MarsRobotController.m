@@ -37,7 +37,7 @@ classdef MarsRobotController < handle
         mtr_right  % RIGHT MOTOR
     end
 
-    methods
+    methods (Access = public)
         function setup(obj)
             COM_CloseNXT('all');
 
@@ -60,6 +60,31 @@ classdef MarsRobotController < handle
             obj.mtr_right = NXTMotor('A');
         end
 
+        function start(obj)
+            obj.goStraightForward(obj.SPEED_NORMAL, -1);
+
+            while (true)
+                if (obj.detectObstacle() <= obj.STOP_DISTANCE)
+                    obj.stop();
+                    return;
+                end
+
+                if obj.sensoredColor(obj.LIGHT_SENSOR_RIGHT, obj.COLOR_BLACK)
+                    obj.goStraightBackward(self.SPEED_NORMAL, obj.BACK_TIME);
+                    pause(0.2);
+                    obj.turnRight(self.SPEED_NORMAL, obj.TURN_TIME);
+                    obj.goStraightForward(self.SPEED_NORMAL, -1);
+                elseif obj.sensoredColor(obj.LIGHT_SENSOR_LEFT, obj.COLOR_BLACK)
+                    obj.goStraightBackward(self.SPEED_NORMAL, obj.BACK_TIME);
+                    pause(0.2);
+                    obj.turnLeft(self.SPEED_NORMAL, obj.TURN_TIME);
+                    obj.goStraightForward(self.SPEED_NORMAL, -1);
+                end
+            end
+        end
+    end
+
+    methods (Access = private)
         %F This function will return a double value, which is
         %  the distance between the robot and the nearest object
         %  in front of the robot.
@@ -139,29 +164,6 @@ classdef MarsRobotController < handle
             if (duration ~= -1)
                 pause(duration);
                 obj.mtr_right.Stop('off');
-            end
-        end
-
-        function start(obj)
-            obj.goStraightForward(obj.SPEED_NORMAL, -1);
-
-            while (true)
-                if (obj.detectObstacle() <= obj.STOP_DISTANCE)
-                    obj.stop();
-                    return;
-                end
-
-                if obj.sensoredColor(obj.LIGHT_SENSOR_RIGHT, obj.COLOR_BLACK)
-                    obj.goStraightBackward(self.SPEED_NORMAL, obj.BACK_TIME);
-                    pause(0.2);
-                    obj.turnRight(self.SPEED_NORMAL, obj.TURN_TIME);
-                    obj.goStraightForward(self.SPEED_NORMAL, -1);
-                elseif obj.sensoredColor(obj.LIGHT_SENSOR_LEFT, obj.COLOR_BLACK)
-                    obj.goStraightBackward(self.SPEED_NORMAL, obj.BACK_TIME);
-                    pause(0.2);
-                    obj.turnLeft(self.SPEED_NORMAL, obj.TURN_TIME);
-                    obj.goStraightForward(self.SPEED_NORMAL, -1);
-                end
             end
         end
     end
