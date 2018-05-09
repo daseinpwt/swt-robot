@@ -100,6 +100,7 @@ classdef MarsRobotController < handle
             sensored = (p == color);
         end
 
+        %F If the duration is -1, then it will not stop.
         function goStraightForward(obj, speed, duration)
             obj.mtr_all.Stop('off');
             obj.mtr_all.Power = speed;
@@ -110,6 +111,7 @@ classdef MarsRobotController < handle
             end
         end
 
+        %F If the duration is -1, then it will not stop.
         function goStraightBackward(obj, speed, duration)
             obj.mtr_all.Stop('off');
             obj.mtr_all.Power = -speed;
@@ -120,6 +122,7 @@ classdef MarsRobotController < handle
             end
         end
 
+        %F If the duration is -1, then it will not stop.
         function turnRight(obj, speed, duration)
             obj.mtr_left.Power = speed;
             obj.mtr_left.SendToNXT();
@@ -129,6 +132,7 @@ classdef MarsRobotController < handle
             end
         end
 
+        %F If the duration is -1, then it will not stop.
         function turnLeft(obj, speed, duration)
             obj.mtr_right.Power = speed;
             obj.mtr_right.SendToNXT();
