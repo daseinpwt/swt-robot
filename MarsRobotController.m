@@ -1,8 +1,8 @@
 classdef MarsRobotController < handle
 
     properties (Constant)
-        MOTOR_LEFT    = 1
-        MOTOR_RIGHT   = 2
+        LIGHT_SENSOR_LEFT    = 1
+        LIGHT_SENSOR_RIGHT   = 2
 
         COLOR_BLACK   = 1
         COLOR_WHITE   = 2
@@ -15,8 +15,8 @@ classdef MarsRobotController < handle
         %! This params matrix should be measured each time
         COLOR_FLAG_VALUE = [
         %   BLACK   WHITE   RED    GREEN   GRAY
-            440     730     1000   1000    1000 ; % LEFT MOTOR
-            430     720     1000   1000    1000   % RIGHT MOTOR
+            440     730     1000   1000    1000 ; % LEFT LIGHT SENSOR
+            430     720     1000   1000    1000   % RIGHT LIGHT SENSOR
         ]
 
         SPEED_SLOW    = 10
@@ -82,7 +82,7 @@ classdef MarsRobotController < handle
 
         %F Check if the motor has detected the color
         function sensored = sensoredColor(obj, motor, color)
-            if motor == obj.MOTOR_LEFT
+            if motor == obj.LIGHT_SENSOR_LEFT
                 v = GetLight(SENSOR_3);
 %                 v = 500;
             else
@@ -147,12 +147,12 @@ classdef MarsRobotController < handle
                     return;
                 end
 
-                if obj.sensoredColor(obj.MOTOR_RIGHT, obj.COLOR_BLACK)
+                if obj.sensoredColor(obj.LIGHT_SENSOR_RIGHT, obj.COLOR_BLACK)
                     obj.goStraightBackward(self.SPEED_NORMAL, obj.BACK_TIME);
                     pause(0.2);
                     obj.turnRight(self.SPEED_NORMAL, obj.TURN_TIME);
                     obj.goStraightForward(self.SPEED_NORMAL, -1);
-                elseif obj.sensoredColor(obj.MOTOR_LEFT, obj.COLOR_BLACK)
+                elseif obj.sensoredColor(obj.LIGHT_SENSOR_LEFT, obj.COLOR_BLACK)
                     obj.goStraightBackward(self.SPEED_NORMAL, obj.BACK_TIME);
                     pause(0.2);
                     obj.turnLeft(self.SPEED_NORMAL, obj.TURN_TIME);
