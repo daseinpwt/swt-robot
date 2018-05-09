@@ -26,6 +26,8 @@ classdef MarsRobotController < handle
         % for moving along the black line
         BACK_TIME     = 0.25;
         TURN_TIME     = 0.3;
+
+        STOP_DISTANCE = 20;
     end
 
     properties
@@ -140,7 +142,7 @@ classdef MarsRobotController < handle
             obj.goStraightForward(obj.SPEED_NORMAL, -1);
 
             while (true)
-                if (obj.detectObstacle() <= 20)
+                if (obj.detectObstacle() <= obj.STOP_DISTANCE)
                     obj.stop();
                     return;
                 end
