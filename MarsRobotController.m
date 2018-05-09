@@ -58,7 +58,7 @@ classdef MarsRobotController < handle
             obj.mtr_right = NXTMotor('A');
         end
 
-        %F This function will return a double values, which is
+        %F This function will return a double value, which is
         %  the distance between the robot and the nearest object
         %  in front of the robot.
         function distance = detectObstacle(obj)
